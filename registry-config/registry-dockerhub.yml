@@ -1,0 +1,15 @@
+#参考 https://distribution.github.io/distribution/recipes/mirror/
+version: 0.1
+log:
+  fields:
+    service: registry
+storage:
+  filesystem:
+    rootdirectory: /var/lib/registry
+  delete:
+    enabled: true
+  cache:
+    blobdescriptor: inmemory   
+    blobdescriptorsize: 10000
+proxy:
+  remoteurl: https://registry-1.docker.io
