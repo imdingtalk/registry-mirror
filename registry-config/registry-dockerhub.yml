@@ -12,4 +12,4 @@ storage:
     blobdescriptor: inmemory   
     blobdescriptorsize: 10000
 proxy:
-  remoteurl: https://registry-1.docker.io
+  remoteurl: https://docker.io
