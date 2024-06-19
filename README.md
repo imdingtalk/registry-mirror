@@ -36,13 +36,36 @@
 ```bash
 #对于一个dockerhub上的镜像，如 nginx:1.27 , 可以直接pull
 docker pull nginx:1.27
-#对于非dockerhub的镜像，需要加你的域名前缀
+#对于非dockerhub的镜像，由于docker客户端默认只支持中心仓库(即docker.io)的mirror配置，故需要加你的域名前缀
 
 如： registry.k8s.io/kube-proxy:v1.28.4
 可以通过以下命令pull
 docker pull xxx.onrender.com/registry.k8s.io/kube-proxy:v1.28.4
 ```
+
+![image](https://github.com/imdingtalk/registry-mirror/assets/16778873/85c37854-8eaa-4d16-bad3-0403279052b9)
+
 #### crictl/containerd
+1. 配置  
+Containerd 较简单，它支持任意 `registry` 的 `mirror`，只需要修改配置文件 `/etc/containerd/config.toml`，添加如下的配置：  
+```yaml
+    [plugins."io.containerd.grpc.v1.cri".registry]
+      [plugins."io.containerd.grpc.v1.cri".registry.mirrors]
+        [plugins."io.containerd.grpc.v1.cri".registry.mirrors."docker.io"]
+          endpoint = ["https://xxxx.onrender.com"]
+        [plugins."io.containerd.grpc.v1.cri".registry.mirrors."k8s.gcr.io"]
+          endpoint = ["https://xxxx.onrender.com"]
+        [plugins."io.containerd.grpc.v1.cri".registry.mirrors."gcr.io"]
+          endpoint = ["https://xxxx.onrender.com"]
+        [plugins."io.containerd.grpc.v1.cri".registry.mirrors."ghcr.io"]
+          endpoint = ["https://xxxx.onrender.como"]
+        [plugins."io.containerd.grpc.v1.cri".registry.mirrors."quay.io"]
+          endpoint = ["https://xxxx.onrender.com"]
+```
+2. 使用
+
+ 可以直接`pull` 配置了`mirror`的仓库  
+ `crictl pull registry.k8s.io/kube-proxy:v1.28.4`
 #### podman
 
 
