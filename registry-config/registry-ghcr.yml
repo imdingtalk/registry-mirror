@@ -20,4 +20,4 @@ http:
     Access-Control-Max-Age: [1728000]
     Access-Control-Expose-Headers: ['Docker-Content-Digest']
 proxy:
-  remoteurl: https://registry-1.docker.io
+  remoteurl: https://ghcr.io

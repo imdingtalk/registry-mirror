@@ -2,12 +2,10 @@ services:
   ## docker hub
   dockerhub:
     container_name: registry-docker-hub
-    image: registry:2.8.3
+    image: registry:latest
     restart: always
     volumes:
-      - ./registry-config/registry-dockerhub.yml:/etc/distribution/config.yml
-    ports:
-      - 5001:5000
+      - ./registry-config/registry-dockerhub.yml:/etc/docker/registry/config.yml
     networks:
       - registry
 
@@ -15,22 +13,20 @@ services:
   ## ghcr.io
   ghcr:
     container_name: registry-ghcr
-    image: registry:2.8.3
+    image: registry:latest
     restart: always
     volumes:
-      - ./registry-config/registry-ghcr.yml:/etc/distribution/config.yml
-    ports:
-      - 5002:5000
+      - ./registry-config/registry-ghcr.yml:/etc/docker/registry/config.yml
     networks:
       - registry
 
   ## registry.k8s.io
   gcr:
     container_name: registry-k8s
-    image: registry:2.8.3
+    image: registry:latest
     restart: always
     volumes:
-      - ./registry-config/registry-k8s.yml:/etc/distribution/config.yml
+      - ./registry-config/registry-k8s.yml:/etc/docker/registry/config.yml
     ports:
       - 5003:5000
     networks:
@@ -39,24 +35,20 @@ services:
   ## k8s.gcr.io
   k8sgcr:
     container_name: registry-k8s-gcr
-    image: registry:2.8.3
+    image: registry:latest
     restart: always
     volumes:
-      - ./registry-config/registry-k8s-gcr.yml:/etc/distribution/config.yml
-    ports:
-      - 5004:5000
+      - ./registry-config/registry-k8s-gcr.yml:/etc/docker/registry/config.yml
     networks:
       - registry
 
   ## quay.io
   quay:
     container_name: registry-quay
-    image: registry:2.8.3
+    image: registry:latest
     restart: always
     volumes:
-      - ./registry-config/registry-quay.yml:/etc/distribution/config.yml
-    ports:
-      - 5005:5000
+      - ./registry-config/registry-quay.yml:/etc/docker/registry/config.yml
     networks:
       - registry
 
@@ -65,15 +57,9 @@ services:
     container_name: registry-ui
     image: joxit/docker-registry-ui:main-debian
     environment:
-      - DOCKER_REGISTRY_URL=http://registry-docker-hub:5000
-      # [必须]使用 openssl rand -hex 16 生成
-      - SECRET_KEY_BASE=ce1d121bc11461e3fe95e133fbf38755
-      # 启用Image TAG 的删除按钮
-      - ENABLE_DELETE_IMAGES=true
-      - NO_SSL_VERIFICATION=true
+      - NGINX_PROXY_PASS_URL=http://registry-docker-hub:5000
+      - SINGLE_REGISTRY=true
     restart: always
-    ports:
-      - 5000:8080
     networks:
       - registry
 
@@ -83,7 +69,8 @@ services:
     image: nginx:1.27
     restart: always
     volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./nginx-default.conf:/etc/nginx/conf.d/default.conf
+      - ./nginx.conf:/etc/nginx/nginx.conf
     ports:
       - 80:80
     networks:
