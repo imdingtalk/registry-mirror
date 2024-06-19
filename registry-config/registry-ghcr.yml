@@ -11,7 +11,7 @@ storage:
     blobdescriptor: inmemory   
     blobdescriptorsize: 10000
 http:
-  addr: :5000
+  addr: :5002
   headers:
     X-Content-Type-Options: [nosniff]
     Access-Control-Allow-Origin: ['*']

@@ -27,8 +27,6 @@ services:
     restart: always
     volumes:
       - ./registry-config/registry-k8s.yml:/etc/docker/registry/config.yml
-    ports:
-      - 5003:5000
     networks:
       - registry
 
