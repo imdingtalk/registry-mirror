@@ -68,7 +68,10 @@ Containerd 较简单，它支持任意 `registry` 的 `mirror`，只需要修改
  `crictl pull registry.k8s.io/kube-proxy:v1.28.4`
 #### podman
 
+## 原理
 
+见：
+https://docs.docker.com/docker-hub/mirror/
 
 
 
