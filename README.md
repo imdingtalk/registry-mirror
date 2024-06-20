@@ -17,7 +17,7 @@
   1.1. 登入 [Render](https://dashboard.render.com/)  
   1.2.  创建服务  
   ![image](https://github.com/imdingtalk/registry-mirror/assets/16778873/7fb04f0c-b352-469e-93ae-d6c395f1469b)  
-  1.3. 选择镜像部署方式部署，使用镜像  `imdingtalk/registry-mirror:v1.1`  , 随便取一个名字，随后会根据名称分配一个`xxxx.onrender.com`域名,后续作为`Registry Mirrors` 配置到不同的`docker`客户端,  
+  1.3. 选择镜像部署方式部署，使用镜像  `imdingtalk/registry-mirror:v1.2`  , 随便取一个名字，随后会根据名称分配一个`xxxx.onrender.com`域名,后续作为`Registry Mirrors` 配置到不同的`docker`客户端,  
   ![image](https://github.com/imdingtalk/registry-mirror/assets/16778873/5a792e8e-d72e-4312-b3ac-efb127a5f402)
   ![image](https://github.com/imdingtalk/registry-mirror/assets/16778873/dd52be65-0541-40a2-8456-773da6c58f99)
   1.4. 其他不用配置，直接创建  
@@ -58,7 +58,7 @@ Containerd 较简单，它支持任意 `registry` 的 `mirror`，只需要修改
         [plugins."io.containerd.grpc.v1.cri".registry.mirrors."gcr.io"]
           endpoint = ["https://xxxx.onrender.com"]
         [plugins."io.containerd.grpc.v1.cri".registry.mirrors."ghcr.io"]
-          endpoint = ["https://xxxx.onrender.como"]
+          endpoint = ["https://xxxx.onrender.com"]
         [plugins."io.containerd.grpc.v1.cri".registry.mirrors."quay.io"]
           endpoint = ["https://xxxx.onrender.com"]
 ```
@@ -67,7 +67,51 @@ Containerd 较简单，它支持任意 `registry` 的 `mirror`，只需要修改
  可以直接`pull` 配置了`mirror`的仓库  
  `crictl pull registry.k8s.io/kube-proxy:v1.28.4`
 #### podman
+`Podman` 同样支持任意 `registry` 的 `mirror`，修改配置文件 `/etc/containers/registries.conf`，添加配置：  
+```yaml
+unqualified-search-registries = ['docker.io', 'k8s.gcr.io', 'gcr.io', 'ghcr.io', 'quay.io']
 
+[[registry]]
+prefix = "docker.io"
+insecure = true
+location = "registry-1.docker.io"
+
+[[registry.mirror]]
+location = "https://xxxx.onrender.com"
+
+[[registry]]
+prefix = "k8s.gcr.io"
+insecure = true
+location = "k8s.gcr.io"
+
+[[registry.mirror]]
+location = "https://xxxx.onrender.com"
+
+[[registry]]
+prefix = "gcr.io"
+insecure = true
+location = "gcr.io"
+
+[[registry.mirror]]
+location = "https://xxxx.onrender.com"
+
+[[registry]]
+prefix = "ghcr.io"
+insecure = true
+location = "ghcr.io"
+
+[[registry.mirror]]
+location = "https://xxxx.onrender.com"
+
+[[registry]]
+prefix = "quay.io"
+insecure = true
+location = "quay.io"
+
+[[registry.mirror]]
+location = "https://xxxx.onrender.com"
+
+```
 ## 原理
 
 见：
