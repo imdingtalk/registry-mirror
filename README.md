@@ -144,3 +144,7 @@ Render每月向每个用户和团队授予750个免费实例小时：
 
 #### 免费带宽
 - 免费带宽每月100GB  
+
+## 测试
+
+![image](https://github.com/imdingtalk/registry-mirror/assets/16778873/f9a562b1-79f4-4d01-8770-a2113a151de6)
