@@ -22,3 +22,4 @@ http:
     Access-Control-Expose-Headers: ['Docker-Content-Digest']
 proxy:
   remoteurl: https://k8s.gcr.io
+  ttl: 2m

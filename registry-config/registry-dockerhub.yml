@@ -21,3 +21,4 @@ http:
     Access-Control-Expose-Headers: ['Docker-Content-Digest']
 proxy:
   remoteurl: https://registry-1.docker.io
+  ttl: 2m

@@ -11,6 +11,13 @@ storage:
   cache:
     blobdescriptor: inmemory   
     blobdescriptorsize: 10000
+  maintenance:
+    uploadpurging:
+      enabled: true
+      age: 20m
+      dryrun: false
+      interval: 5m
+
 http:
   addr: :5005
   headers:
@@ -22,3 +29,4 @@ http:
     Access-Control-Expose-Headers: ['Docker-Content-Digest']
 proxy:
   remoteurl: https://quay.io
+  ttl: 2m
