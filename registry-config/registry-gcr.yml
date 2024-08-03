@@ -1,0 +1,25 @@
+#参考 https://distribution.github.io/distribution/recipes/mirror/
+version: 0.1
+log:
+  fields:
+    service: registry
+storage:
+  filesystem:
+    rootdirectory: /var/lib/registry
+  delete:
+    enabled: true
+  cache:
+    blobdescriptor: inmemory   
+    blobdescriptorsize: 10000
+http:
+  addr: :5006
+  headers:
+    X-Content-Type-Options: [nosniff]
+    Access-Control-Allow-Origin: ['*']
+    Access-Control-Allow-Methods: ['HEAD', 'GET', 'OPTIONS', 'DELETE']
+    Access-Control-Allow-Headers: ['Authorization', 'Accept', 'Cache-Control']
+    Access-Control-Max-Age: [1728000]
+    Access-Control-Expose-Headers: ['Docker-Content-Digest']
+proxy:
+  remoteurl: https://gcr.io
+  ttl: 2m

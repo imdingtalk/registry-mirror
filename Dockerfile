@@ -34,6 +34,7 @@ CMD ["/bin/sh", "-c", "\
   registry serve /etc/docker/registry/config.d/registry-ghcr.yml & \
   registry serve /etc/docker/registry/config.d/registry-k8s.yml & \
   registry serve /etc/docker/registry/config.d/registry-k8s-gcr.yml & \
+  registry serve /etc/docker/registry/config.d/registry-gcr.yml & \
   registry serve /etc/docker/registry/config.d/registry-quay.yml & \
   # 启动 Nginx \
   nginx -g 'daemon off;' \

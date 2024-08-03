@@ -39,7 +39,15 @@ services:
       - ./registry-config/registry-k8s-gcr.yml:/etc/docker/registry/config.yml
     networks:
       - registry
-
+  ## gcr.io
+  gcr:
+    container_name: registry-gcr
+    image: registry:latest
+    restart: always
+    volumes:
+      - ./registry-config/registry-gcr.yml:/etc/docker/registry/config.yml
+    networks:
+      - registry
   ## quay.io
   quay:
     container_name: registry-quay
